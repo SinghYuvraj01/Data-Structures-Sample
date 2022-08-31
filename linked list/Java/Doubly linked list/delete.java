@@ -12,7 +12,7 @@ class Node {
     }
 }
 
-public class Insert {
+public class delete {
 
     static Scanner sc = new Scanner(System.in);
 
@@ -32,63 +32,54 @@ public class Insert {
         c.prev = b;
         d.prev = c;
 
-        // Function to insert value at the head
-        // insertHead(a);
+        // Function to delete value at the head
+        deleteHead(a);
 
-        // Funciton to insert value at the tail
-        // insertAtTail(a);
+        // Funciton to delete value at the tail
+        // deleteAtTail(a);
 
-        // Function to insert node at the middle
-        // insertAtMiddle(a);
+        // Function to delete node at the middle
+        // deleteAtMiddle(a);
 
         // Function to print
         print(a);
     }
 
-    static void insertHead(Node head) {
+    static void deleteHead(Node head) {
 
         Node temp = head;
-        int value;
-        System.out.print("Enter value to be inserted : ");
-        value = sc.nextInt();
-        Node newnode = new Node(value);
-
         if (temp == null) {
-            // Means new node is the head node itself
-            temp = newnode;
+            // Nothing to delete
+            System.out.println("Nothing to delete");
             return;
         }
 
-        newnode.next = temp;
-        temp.prev = newnode;
-        temp = newnode;
+        Node newhead = temp.next;
+        newhead.prev = null;
 
     }
 
-    static void insertAtTail(Node head) {
+    static void deleteAtTail(Node head) {
         int value;
-        System.out.print("Enter value to be inserted : ");
-        value = sc.nextInt();
-        Node newnode = new Node(value);
+
         Node temp = head;
         if (temp == null) {
-            // This newnode is both head and tail node
-            temp = newnode;
+            // Nothing to delete
+            System.out.println("Nothing to delete");
+            return;
         }
 
         // Find the tail node
         Node find = head;
-        while (find.next != null) {
+        while (find.next.next != null) {
             find = find.next;
         }
 
-        // Now we have found the tail node
-        find.next = newnode;
-        newnode.prev = find;
-        find = newnode;
+        // Now we have found the node before tail node
+        find.next = null;
     }
 
-    static void insertAtMiddle(Node head) {
+    static void deleteAtMiddle(Node head) {
         int value;
         System.out.print("Enter value to be inserted : ");
         value = sc.nextInt();
@@ -102,15 +93,15 @@ public class Insert {
         // Find the middle node
         Node slow = head;
         Node fast = head;
-        while (fast != null && fast.next != null) {
+        while (fast.next != null && fast.next.next != null) {
             slow = slow.next;
             fast = fast.next.next;
         }
 
-        newnode.next = slow.next;
-        slow.next.prev = newnode;
-        slow.next = newnode;
-        slow = newnode;
+        Node remove = slow.next;
+        slow.next = remove.next;
+        remove.next.prev = slow;
+
     }
 
     static void print(Node head) {
